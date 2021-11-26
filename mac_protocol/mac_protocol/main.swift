@@ -9,7 +9,10 @@ import Foundation
 import IOKit
 var device = UDPDevice()
 // test
+
+
 Task{
-  let data = await device.getFirmwareVersion()
+  //let data = await device.getFirmwareVersion()
+  await device.setDateAndTime(type: 0)
 }
 dispatchMain()

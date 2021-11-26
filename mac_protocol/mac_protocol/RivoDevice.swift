@@ -41,10 +41,9 @@ class RivoDevice {
          // let crc = crc32(uLong(0), UnsafePointer<Bytef>(data!.bytes), uInt(data!.length))
      }
      */
-    
     func write(cmd: String, data: [UInt8]) {
         // do nothing
-        print("something")
+        
     }
     func read(sentCmd: String, onResponse: @escaping (String?) -> ()){
         // do nothing
@@ -78,16 +77,26 @@ class RivoDevice {
         formatter.dateFormat = "SSSS"
         let millisec = formatter.string(from: Date())
         
+        let yearInt = Int(year)!
+        let monInt = Int(mon)!
+        let dayInt = Int(day)!
+        let hourInt = Int(hour)!
+        let minInt = Int(min)!
+        let secInt = Int(sec)!
+        let millisecInt = Int(millisec)!
+        
         var DTdata = [UInt8]()
         DTdata.append(UInt8(1))
         DTdata.append(UInt8(type))
-        DTdata.append(UInt8(year)!)
-        DTdata.append(UInt8(mon)!)
-        DTdata.append(UInt8(day)!)
-        DTdata.append(UInt8(hour)!)
-        DTdata.append(UInt8(min)!)
-        DTdata.append(UInt8(sec)!)
-        DTdata.append(UInt8(millisec)!)
+        DTdata.append(UInt8(yearInt/100))
+        DTdata.append(UInt8(yearInt%100))
+        DTdata.append(UInt8(monInt))
+        DTdata.append(UInt8(dayInt))
+        DTdata.append(UInt8(hourInt))
+        DTdata.append(UInt8(minInt))
+        DTdata.append(UInt8(secInt))
+        DTdata.append(UInt8(millisecInt/100))
+        DTdata.append(UInt8(millisecInt%100))
         
         write(cmd: "DT", data: DTdata)
         return await withCheckedContinuation { continuation in
