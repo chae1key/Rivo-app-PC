@@ -12,10 +12,10 @@
         <NavigationView x:Name="NavView" IsBackButtonVisible="Collapsed" IsSettingsVisible="false" PaneTitle="RIVO APPLICATION"
                         ItemInvoked="NavView_ItemInvoked">
             <NavigationView.MenuItems>
-                <NavigationViewItem Tag="battery" Content="연결 상태 및 배터리"/>
+                <NavigationViewItem Tag="Myrivo" Content="리보 찾기" />
                 <NavigationViewItem Tag="setting" Content="설정" />
                 <NavigationViewItem Tag="update"  Content="업데이트" />
-                <NavigationViewItem Tag="Myrivo" Content="My리보" />
+                <NavigationViewItem Tag="battery" Content="My리보"/>
                 <NavigationViewItem Tag="help" Content="도움말" />
             </NavigationView.MenuItems>
             <ScrollViewer>

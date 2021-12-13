@@ -69,3 +69,4 @@ C:\Users\공부 ㅅㄱ~~\source\repos\RivoApplication\RivoApplication\bin\x86\De
 C:\Users\공부 ㅅㄱ~~\source\repos\RivoApplication\RivoApplication\bin\x86\Debug\RivoPage.xbf
 C:\Users\공부 ㅅㄱ~~\source\repos\RivoApplication\RivoApplication\bin\x86\Debug\SettingPage.xbf
 C:\Users\공부 ㅅㄱ~~\source\repos\RivoApplication\RivoApplication\bin\x86\Debug\UpdatePage.xbf
+C:\Users\공부 ㅅㄱ~~\source\repos\RivoApplication\RivoApplication\bin\x86\Debug\Core\ForBundle\AppxManifest.xml

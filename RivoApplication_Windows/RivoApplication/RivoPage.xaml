@@ -7,27 +7,49 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <Style x:Key="ListItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource SubtitleTextBlockStyle}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="10,0,0,0"/>
+            <Setter Property="Width" Value="450"/>
+            <Setter Property="Foreground" Value="{StaticResource SystemControlForegroundBaseHighBrush}"/>
+        </Style>
+        <DataTemplate x:Key="ResultsListViewTemplate" x:DataType="local:BluetoothLEDeviceDisplay">
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" MinWidth="100"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="1" Margin="5">
+                    <TextBlock Style="{StaticResource ListItemTextStyle}" TextWrapping="WrapWholeWords">
+                        Name: <Run Text="{x:Bind Name, Mode=OneWay}" FontWeight="Bold"/>
+                    </TextBlock>
+                    <TextBlock>
+                        IsPaired: <Run Text="{x:Bind IsPaired, Mode=OneWay}"/>, IsConnected: <Run Text="{x:Bind IsConnected, Mode=OneWay}"/>, IsConnectable:<Run Text="{x:Bind IsConnectable, Mode=OneWay}"/>
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
     <Grid>
-        <TextBlock x:Name="Rivo3" HorizontalAlignment="Left" Margin="29,20,0,0" Text="RIVO3 등록" TextWrapping="Wrap" VerticalAlignment="Top" SelectionChanged="TextBlock_SelectionChanged" FontWeight="Bold" FontSize="22"/>
-        <Button x:Name="Search" Content="검색" Margin="180,14,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="96" Click="Search_Click"/>
-        <ListView Margin="29,71,912,522">
+        <TextBlock x:Name="Rivo3" HorizontalAlignment="Left" Margin="29,20,0,0" Text="RIVO3 등록" TextWrapping="Wrap" VerticalAlignment="Top" 
+                   FontWeight="Bold" FontSize="22"/>
+        <Button x:Name="Search" Content="검색" Margin="180,14,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="124"  Click="{x:Bind Search_Click}" />
+        <Button x:Name="Pair" Content="페어링" Margin="330,14,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="124" Click="{x:Bind Pair_Click}"
+                IsEnabled="{x:Bind Not(ResultsListView.SelectedItem.(local:BluetoothLEDeviceDisplay.IsPaired)), FallbackValue=False, Mode=OneWay}"/>
+        <Button x:Name="ConnectButton" Content="연결" Margin="478,14,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="124" Click="{x:Bind ConnectButton_Click}"/>
+        <ListView x:Name="ResultsListView" Margin="29,127,41,524" 
+                      ItemTemplate="{StaticResource ResultsListViewTemplate}"
+                      ItemsSource="{x:Bind KnownDevices, Mode=OneWay}">
             <ListView.Background>
-                <SolidColorBrush Color="{ThemeResource SystemChromeMediumHighColor}"/>
+                <SolidColorBrush Color="{ThemeResource SystemChromeHighColor}"/>
             </ListView.Background>
         </ListView>
-        <ProgressRing Name="SearchStatus" HorizontalAlignment="Left" Margin="290,22,0,0" VerticalAlignment="Top" Height="27" Width="27"/>
-        <TextBlock HorizontalAlignment="Left" Margin="28,256,0,0" Text="이름 변경" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="22"/>
-        <TextBlock HorizontalAlignment="Left" Margin="29,388,0,0" Text="장치 정보" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="22" FontWeight="Bold"/>
-        <TextBox HorizontalAlignment="Left" Margin="45,304,0,0" Text="My Rivo" TextWrapping="Wrap" VerticalAlignment="Top" BorderBrush="Black" Background="{x:Null}" FontWeight="Normal" FontSize="20" Width="153"/>
-        <Button Content="저장" Margin="228,308,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Height="34"/>
-        <TextBlock HorizontalAlignment="Left" Margin="66,428,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" Height="23" FontWeight="Bold" FontSize="14"><Run Text="버전 : "/><LineBreak/><Run/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="61,457,0,0" Text="시리얼 :" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
-        <TextBlock HorizontalAlignment="Left" Margin="28,506,0,0" Text="내 리보 찾기" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="22" FontWeight="Bold"/>
-        <ToggleSwitch Header="" Margin="131,543,0,0" OffContent="" VerticalAlignment="Top" Width="49"/>
-        <TextBlock HorizontalAlignment="Left" Margin="67,554,0,0" Text="소리" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="14"/>
-        <TextBlock HorizontalAlignment="Left" Margin="67,589,0,0" Text="진동" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
-        <ToggleSwitch Header="" OffContent="" Margin="131,578,0,0" VerticalAlignment="Top" Width="49"/>
+
+        <ProgressRing Name="SearchStatus" HorizontalAlignment="Left" Margin="316,22,0,0" VerticalAlignment="Top" Height="27" Width="27"/>
+        <TextBlock HorizontalAlignment="Left" Margin="29,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold">
+            Selected device : <Run x:Name="SelectedDeviceRun" FontWeight="Bold"/>
+        </TextBlock>
 
     </Grid>
 </Page>

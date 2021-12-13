@@ -10,14 +10,10 @@
 
     <Grid>
         <ProgressRing Name="UpdateStatus"
-                      Margin="0,329,0,0" VerticalAlignment="Top" Height="119" Width="119" CornerRadius="60"
+                      Margin="0,323,0,0" VerticalAlignment="Top" Height="119" Width="119" CornerRadius="60"
                       IsActive="False"/>
-        <Button x:Name="Update" Content="Update" Margin="0,257,0,0" VerticalAlignment="Top" 
-                FontSize="20" FontWeight="Bold" BorderBrush="{x:Null}" Click="Button_Click" HorizontalAlignment="Center">
-            <Button.Background>
-                <SolidColorBrush Color="{ThemeResource SystemAccentColorLight3}"/>
-            </Button.Background>
-        </Button>
+        <Button x:Name="Update" Content="Update" Margin="0,213,0,0" VerticalAlignment="Top" 
+                FontSize="20" FontWeight="Bold" BorderBrush="{x:Null}" Click="Button_Click" HorizontalAlignment="Center" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}"/>
 
     </Grid>
 </Page>
