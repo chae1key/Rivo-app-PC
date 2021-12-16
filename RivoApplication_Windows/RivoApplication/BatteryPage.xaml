@@ -30,8 +30,6 @@
         <!--ProgressBar의 IsIndeterminate이 false이면 value에 따라 bar를 채운다.-->
         <!--<ProgressBar x:Name="Battery" Height="30" 
                      Margin="141,36,863,0" VerticalAlignment="Top" Foreground="#FF61E623" ValueChanged="Battery_ValueChanged"/>-->
-        <TextBlock HorizontalAlignment="Left" Margin="120,284,0,0" Text="3.1.0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" Width="52"/>
-        <TextBlock HorizontalAlignment="Left" Margin="126,314,0,0" Text="86F9" TextWrapping="Wrap" VerticalAlignment="Top" SelectionChanged="TextBlock_SelectionChanged"/>
 
     </Grid>
 </Page>

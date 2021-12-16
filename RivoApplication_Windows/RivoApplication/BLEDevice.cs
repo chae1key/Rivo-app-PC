@@ -1,4 +1,4 @@
-﻿//using System;
+﻿ //using System;
 //using System.Collections.Generic;
 //using System.Linq;
 //using System.Runtime.InteropServices;
@@ -18,7 +18,7 @@
 
 //        public async void initBLE(BluetoothLEAdvertisementDataTypes id)
 //        {
-            
+
 //        }
 
 //        public override async Task<byte[]> SendAndReceive(byte[] data)
