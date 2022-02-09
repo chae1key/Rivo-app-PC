@@ -38,18 +38,23 @@
         <Button x:ConnectionId='10' x:Name="Pair" Content="페어링" Margin="330,14,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="124"                            
                                                                                                                                                   />
         <Button x:ConnectionId='11' x:Name="ConnectButton" Content="연결" Margin="478,14,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Width="124"                                     />
-        <ListView x:ConnectionId='12' x:Name="ResultsListView" Margin="29,127,41,524" 
-                      ItemTemplate="{StaticResource ResultsListViewTemplate}"
-                                                                      >
+        <ListView x:ConnectionId='12' x:Name="ResultsListView" Margin="35,85,35,566"
+                  ItemTemplate="{StaticResource ResultsListViewTemplate}"
+                                                                 
+                                                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ListView.Background>
                 <SolidColorBrush Color="{ThemeResource SystemChromeHighColor}"/>
             </ListView.Background>
+            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,0,0"><Run Text="Selected device : "/><Run x:ConnectionId='15' x:Name="SelectedDeviceRun" FontWeight="Bold"/></TextBlock>
         </ListView>
 
-        <ProgressRing x:ConnectionId='13' Name="SearchStatus" HorizontalAlignment="Left" Margin="316,22,0,0" VerticalAlignment="Top" Height="27" Width="27"/>
-        <TextBlock HorizontalAlignment="Left" Margin="29,85,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold">
-            Selected device : <Run x:ConnectionId='14' x:Name="SelectedDeviceRun" FontWeight="Bold"/>
-        </TextBlock>
+        <ComboBox x:ConnectionId='13' x:Name="ServiceList" Margin="646,9,0,0" PlaceholderText="Choose a service" Visibility="Visible" HorizontalAlignment="Left" VerticalAlignment="Top" Height="58"
+                      />
+
+
+
+
+        <ProgressRing x:ConnectionId='14' Name="SearchStatus" HorizontalAlignment="Left" Margin="316,22,0,0" VerticalAlignment="Top" Height="27" Width="27"/>
 
     </Grid>
 </Page>

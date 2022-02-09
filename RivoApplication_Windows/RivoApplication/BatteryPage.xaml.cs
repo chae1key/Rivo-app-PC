@@ -159,7 +159,7 @@ namespace RivoApplication
                 }
             }
             string present = real.Substring(0,version);
-            string serialn = real.Substring(version, serial);
+            string serialn = real.Substring(version+1, serial);
           
 
             root.Notify("Success:"+real);

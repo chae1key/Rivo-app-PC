@@ -35,6 +35,7 @@ namespace RivoApplication
         public static BluetoothLEDevice device;
         public static GattCharacteristic writer;
         public static GattCharacteristic reader;
+        public static GattCharacteristic dataWriter;
         public void setBLEDevice(BluetoothLEDevice recv) {
             device = recv;
         }
@@ -51,6 +52,9 @@ namespace RivoApplication
             return writer;
 
         }
+        public GattCharacteristic dataWriterName() {
+            return dataWriter;
+        }
         public GattCharacteristic readerName() {
             return reader;
         }
@@ -59,6 +63,10 @@ namespace RivoApplication
             reader = recv;
 
         }
+        public void setdataWriter(GattCharacteristic recv) {
+            dataWriter = recv;
+        }
+
         public static MainPage Current { get; internal set; }
         
         public MainPage()

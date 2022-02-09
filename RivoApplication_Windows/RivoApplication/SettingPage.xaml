@@ -10,7 +10,7 @@
 
     <Grid Margin="0,-2,0,2">
         <TextBlock HorizontalAlignment="Left" Margin="20,18,0,0" Text="날짜/시간 동기화" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"/>
-        <ToggleSwitch Name="toggleSwitch" Header="" OnContent="동기화중" OffContent="" Margin="243,20,0,0" VerticalAlignment="Top" Width="56"/>
+        <ToggleSwitch Name="toggleSwitch" Header="" OnContent="동기화중" OffContent="" Margin="243,20,0,0" VerticalAlignment="Top" Width="56" Toggled="ToggleSwitch_Toggled"/>
 
         <TextBlock HorizontalAlignment="Left" Margin="22,70,0,0" Text="언어/입력" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"/>
         <TextBlock HorizontalAlignment="Left" Margin="112,121,0,0" Text="L3" TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="22"/>

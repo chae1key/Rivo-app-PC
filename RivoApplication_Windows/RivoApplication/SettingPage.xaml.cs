@@ -116,7 +116,9 @@ namespace RivoApplication
                 Debug.WriteLine("passing:"+topass[i] + "  ");
             string result = await device.SetL3L4Language(topass);
 
-            Debug.WriteLine("For real: " + result);
+            MainPage page = MainPage.Current;
+            page.Notify("Language Change Success");
+            dispatcherTimer.Start();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -166,6 +168,49 @@ namespace RivoApplication
                 L4method = 21;
             MainPage page = MainPage.Current;
             page.Notify(text);
+        }
+
+        private async void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            GattCharacteristic writer = MainPage.Current.writerName();
+            GattCharacteristic reader = MainPage.Current.readerName();
+            BLEDevice device = new BLEDevice(writer, reader);
+            DateTime time = DateTime.Now;
+            string Time = time.ToString();
+            string year=Time.Substring(0,4);
+            string month = Time.Substring(5,2);
+            string date = Time.Substring(8,2);
+            string ampm=Time.Substring(10,4);
+            string hour = Time.Substring(14,2);
+            byte realhour;
+            string min=Time.Substring(17,2);
+            string sec = Time.Substring(20,2); 
+           
+            realhour = byte.Parse(hour);
+            if (ampm.ToString() == " 오후 ")
+                realhour += 10;
+            short realyear = short.Parse(year);
+            byte realmonth = byte.Parse(month);
+            byte realdate = byte.Parse(date);
+            byte realsec = byte.Parse(sec);
+            byte realmin = byte.Parse(min);
+            MainPage page = MainPage.Current;
+            byte[] topass = new byte[10];
+            topass[0] = 0x1;
+            topass[1] = 0x0;
+            topass[2] = (byte) (realyear & 0xFF00);
+            topass[3] = (byte) (realyear & 0xFF);
+            topass[4] = realmonth;
+            topass[5] = realhour;
+            topass[6] = realmin;
+            topass[7] = realsec;
+            topass[8] = 0;
+            topass[9] = 0;
+           var result=await device.SetDateandTime(topass);
+           
+            page.Notify(realyear.ToString()+" "+realmonth.ToString()+" "+realdate.ToString()+" "+realhour.ToString()+" "+realsec.ToString());
+
+
         }
     }
 

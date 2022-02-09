@@ -111,7 +111,7 @@ namespace RivoApplication
                 var serviceuuid = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
                 var readuuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
                 var writeuuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-            
+                var datauuid = "6e400004-b5a3-f393-e0a9-e50e24dcca9e";
 
                 if (result.Status == GattCommunicationStatus.Success)
                 {
@@ -145,6 +145,10 @@ namespace RivoApplication
                                         Debug.WriteLine("Writer");
                                         MainPage.Current.setwriter(c);
                                         Commander = c;
+                                    }
+                                    if (DisplayHelpers.GetCharacteristicName(c) == datauuid) {
+                                        MainPage.Current.setdataWriter(c);
+                                        Debug.WriteLine("DATAMiner");
                                     }
 
                                 }
