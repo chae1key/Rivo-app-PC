@@ -241,9 +241,10 @@ namespace Rivo
                     Debug.WriteLine("length: " + len);
                     while (recvframe.Length < len)
                     {
-                        await WritePacket(sendframe);
+                        await WriteDataPacket(sendframe);
                         byte[] temp = await readPacket();
-                        Array.Copy(temp, 0, recvframe,0, temp.Length);
+                        if (temp.Length >= len)
+                            break;
 
                     }
                 }
@@ -407,6 +408,11 @@ namespace Rivo
 
             return System.Text.Encoding.Default.GetString(result);
         }
+        public async Task<byte[]> GetL3L4Language()
+        {
+            var result = await SendAndReceive("LN", new byte[] { 0x0 } );
+            return result;
+        }
         public async Task<byte[]> SetScreenReader(byte[] passer)
         {
             var result = await SendAndReceive("SR", passer);
@@ -414,11 +420,16 @@ namespace Rivo
         }
         public async Task<byte[]> FindMyRivo()
         {
-            byte[] result = await SendAndReceive("RV", new byte[] { 0x0, 0x0 });
+            byte[] result = await SendAndReceive("RV", new byte[] { 0x0, 0x1,0x0});
 
             return result;
         }
+        public async Task<byte[]> FindMyRivo1()
+        {
+            byte[] result = await SendAndReceive("RV", new byte[] { 0x0, 0x2,0x0 });
 
+            return result;
+        }
         public async Task<UInt16> GetMTUSize()
         {
 

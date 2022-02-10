@@ -36,6 +36,8 @@ namespace RivoApplication
 
         public override async Task WritePacket(byte[] sendData)
         {
+            for (int a = 0; a < sendData.Length; a++)
+                Debug.WriteLine(sendData[a]);
             Debug.WriteLine("Command");
             IBuffer buffer = sendData.AsBuffer();
             var result=await  writer.WriteValueWithResultAsync(buffer);

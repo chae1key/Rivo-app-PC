@@ -58,17 +58,7 @@ namespace RivoApplication
             return bufferToSend;
         }
         private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-           
-           
-            UpdateStatus.IsActive = true;
-            System.Net.WebClient wc = new System.Net.WebClient();
-            byte[] raw = wc.DownloadData("https://rivo.me/app/version.app");
-            MainPage page = MainPage.Current;
-            page.Notify(Encoding.UTF8.GetString(raw));
-            string webData = System.Text.Encoding.UTF8.GetString(raw);
-         
-            
+        {            
             byte[] mr3bin = new System.Net.WebClient().DownloadData("https://rivo.me/app/MR3.bin");
             byte[] bt = new System.Net.WebClient().DownloadData("https://rivo.me/app/bt.bin");
             byte[] boot = new System.Net.WebClient().DownloadData("https://rivo.me/app/MR3boot.bin");
@@ -114,7 +104,7 @@ namespace RivoApplication
                 var results = await device.UpdateData(dataframe);
                 seqnum++;
             }
-            page.Notify("sent");
+            root.Notify("sent");
             Debug.WriteLine("sent");
             
             
@@ -195,7 +185,7 @@ namespace RivoApplication
                 var results = await device.UpdateData(dataframe);
                 seqnum++;
             }
-            page.Notify("sent");
+            root.Notify("sent");
             Debug.WriteLine("sent");
             
 
@@ -228,7 +218,7 @@ namespace RivoApplication
 
             Debug.WriteLine("what is going on" + recvframe[6]);
             Debug.WriteLine("over" + ends.ToString());
-
+            UpdateStatus.IsActive = false;
         }
         private async void CharacteristicValue2_Changed(GattCharacteristic sender, GattValueChangedEventArgs args)
         {
@@ -256,6 +246,34 @@ namespace RivoApplication
         private void Button_Click1(object sender, RoutedEventArgs e)
         {
            
+        }
+
+        private async void Button_Click5(object sender, RoutedEventArgs e)
+        {
+            UpdateStatus.IsActive = true;
+            System.Net.WebClient wc = new System.Net.WebClient();
+            byte[] raw = wc.DownloadData("https://rivo.me/app/version.app");
+            MainPage page = MainPage.Current;
+            page.Notify(Encoding.UTF8.GetString(raw));
+            string webData = System.Text.Encoding.UTF8.GetString(raw);
+            string firmware = webData.Substring(5,5);
+            string BT = webData.Substring(23,5);
+            var result = await device.GetFirmwareVersion();
+            string firm = Encoding.UTF8.GetString(result);
+            string myfirm = firm.Substring(13,5);
+            string mybt = firm.Substring(22, 5);
+          
+        
+            if (myfirm != firmware)
+            {
+                Update.Visibility = Visibility.Visible;
+
+
+            }
+            if (mybt != BT)
+                UpdateBT.Visibility = Visibility.Visible;
+            UpdateStatus.IsActive = false;
+
         }
     }
 }

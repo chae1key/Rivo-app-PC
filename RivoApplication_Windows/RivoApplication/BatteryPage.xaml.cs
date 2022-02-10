@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -27,13 +28,22 @@ namespace RivoApplication
     {
         private DispatcherTimer dispatcherTimer;
 
-        public BatteryPage()
+        public  BatteryPage()
         {
             this.InitializeComponent();
             dispatcherTimer = new DispatcherTimer();
             
             dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
             dispatcherTimer.Tick += new EventHandler<Object>(dispatcherTimer_Tick);
+            Init();
+
+        }
+
+        private  void Init()
+        {
+            Button_Click_2(null,null);
+            
+            Button_Click(null,null);
         }
 
         private void dispatcherTimer_Tick(object sender,object e)
@@ -57,10 +67,17 @@ namespace RivoApplication
 
         private async void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            GattCharacteristic writer = MainPage.Current.writerName();
-            GattCharacteristic reader = MainPage.Current.readerName();
-            BLEDevice device = new BLEDevice(writer, reader);
-             await device.FindMyRivo();
+            if (Sound.IsOn == true)
+            {
+                GattCharacteristic writer = MainPage.Current.writerName();
+                GattCharacteristic reader = MainPage.Current.readerName();
+                BLEDevice device = new BLEDevice(writer, reader);
+                var result = await device.FindMyRivo1();
+                MainPage root = MainPage.Current;
+                root.Notify("Success");
+                dispatcherTimer.Start();
+                Debug.WriteLine("result: " + result.GetValue(7));
+            }
 
 
         }
@@ -72,6 +89,7 @@ namespace RivoApplication
                 GattCharacteristic writer = MainPage.Current.writerName();
                 GattCharacteristic reader = MainPage.Current.readerName();
                 BLEDevice device = new BLEDevice(writer, reader);
+
                 var result = await device.FindMyRivo();
                 MainPage root = MainPage.Current;
                 root.Notify("Success");
@@ -140,26 +158,39 @@ namespace RivoApplication
             MainPage root = MainPage.Current;
             var result=await device.GetRivoInfo();
             var real = System.Text.Encoding.UTF8.GetString(result);
+            for (int c = 0; c < real.Length; c++)
+                Debug.WriteLine(real[c]);
             int version = -1;
             int versionend = -1;
             int serial = -1;
             for(int a=0; a<real.Length; a++)
             {
-                if (real[a] == ',') {
+                if (real[a] == ':') {
                     version = a;
+                    
+                }
+                if (real[a] == ',') {
+                    serial = a;
                     break;
                 }
             }
-            for (int a = 0; a < real.Length; a++)
+          
+            string present = real.Substring(version,serial-version);
+            for (int a = serial+1; a < real.Length; a++)
             {
+                Debug.WriteLine(serial);
+                if (real[a] == ':')
+                {
+                    version = a;
+
+                }
                 if (real[a] == ',')
                 {
                     serial = a;
                     break;
                 }
             }
-            string present = real.Substring(0,version);
-            string serialn = real.Substring(version+1, serial);
+            string serialn = real.Substring(version,serial-version);
           
 
             root.Notify("Success:"+real);

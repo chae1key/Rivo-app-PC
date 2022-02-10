@@ -112,7 +112,7 @@ namespace RivoApplication
                 var readuuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
                 var writeuuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
                 var datauuid = "6e400004-b5a3-f393-e0a9-e50e24dcca9e";
-
+                bluetoothLeDevice.ConnectionStatusChanged += Connectionstatuschanged;
                 if (result.Status == GattCommunicationStatus.Success)
                 {
                     var services = result.Services;
@@ -192,8 +192,12 @@ namespace RivoApplication
 
         }
 
-
-
+        private void Connectionstatuschanged(BluetoothLEDevice sender, object args)
+        {
+            Debug.WriteLine("Disconnected");
+            MainPage page = MainPage.Current;
+            page.Notify("Disconnected; please connect again");
+        }
 
         private void Search_Click()
         {

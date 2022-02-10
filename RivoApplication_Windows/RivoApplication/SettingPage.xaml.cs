@@ -74,6 +74,7 @@ namespace RivoApplication
             byte[] topass = new byte[3];
             topass[0] = 0x1;
             Array.Copy(topass1, 0, topass, 1, topass1.Length);
+            
            var result=await device.SetScreenReader(topass);
             MainPage page = MainPage.Current;
             page.Notify("Success");
@@ -119,6 +120,10 @@ namespace RivoApplication
             MainPage page = MainPage.Current;
             page.Notify("Language Change Success");
             dispatcherTimer.Start();
+            var change = await device.GetL3L4Language();
+            for (int z = 0; z < change.Length; z++)
+                Debug.WriteLine(change[z]);
+            Debug.WriteLine(Encoding.UTF8.GetString(change));
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -209,6 +214,7 @@ namespace RivoApplication
            var result=await device.SetDateandTime(topass);
            
             page.Notify(realyear.ToString()+" "+realmonth.ToString()+" "+realdate.ToString()+" "+realhour.ToString()+" "+realsec.ToString());
+            
 
 
         }
