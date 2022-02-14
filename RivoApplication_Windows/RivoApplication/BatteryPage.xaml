@@ -23,7 +23,6 @@
         <Button Content="저장" Margin="248,165,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Height="34" Click="Button_Click_1"  />
         <Button Content="정보" Margin="189,242,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Height="34" Click="Button_Click_2" HorizontalAlignment="Left"  />
         <Button Content="상태" Margin="344,48,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Height="34" HorizontalAlignment="Left" Click="Button_Click" />
-        <Button Content="연결끊기" Margin="500,78,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" Height="65" HorizontalAlignment="Left" Click="Button_Click9" Width="140" />
         <TextBlock HorizontalAlignment="Left" Margin="32,244,0,0" Text="장치 정보" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
         <TextBlock HorizontalAlignment="Left" Margin="69,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="42" Height="23" FontWeight="Bold" FontSize="14"><Run Text="버전 : "/><LineBreak/><Run/></TextBlock>
         <TextBlock Name="Version" HorizontalAlignment="Left" Margin="120,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="158" Height="23" FontWeight="Bold" FontSize="14"><Run Text="version"/><LineBreak/><Run/></TextBlock>
