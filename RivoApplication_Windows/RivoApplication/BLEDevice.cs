@@ -36,33 +36,49 @@ namespace RivoApplication
 
         public override async Task WritePacket(byte[] sendData)
         {
-            for (int a = 0; a < sendData.Length; a++)
-                Debug.WriteLine(sendData[a]);
-            Debug.WriteLine("Command");
+          
+           
             IBuffer buffer = sendData.AsBuffer();
-            var result=await  writer.WriteValueWithResultAsync(buffer);
-            Debug.WriteLine("write complete:"+result.Status);
+            try
+            {
+                var result = await writer.WriteValueWithResultAsync(buffer);
+            
+                if (result.Status == GattCommunicationStatus.Unreachable)
+                {
+                    MainPage page = MainPage.Current;
+                    page.Notify("Connect Again");
+                }
+            }
+            catch { }
+            
         }
         public override async Task WriteDataPacket(byte[] sendData)
         {
             IBuffer buffer = sendData.AsBuffer();
-            Debug.WriteLine("WORK");
+        
             var result = await datawriter.WriteValueWithResultAsync(buffer);
             Thread.Sleep(1);
-            Debug.WriteLine("write complete:" + result.Status);
+           
         }
         public override async Task<byte[]> readPacket()
         {
-           GattReadResult buffer= await reader.ReadValueAsync();
-            Debug.WriteLine(buffer.Value);
-            byte[] data;
-            CryptographicBuffer.CopyToByteArray(buffer.Value, out data);
+           
+              
+                GattReadResult buffer = await reader.ReadValueAsync();
+               
+                byte[] data;
+
+                CryptographicBuffer.CopyToByteArray(buffer.Value, out data);
+               
+                    
+                var readata = Encoding.UTF8.GetString(data);
+               
+                return data;
             
-            var readata = Encoding.UTF8.GetString(data);
-            Debug.WriteLine("Data Length:" + readata.Length + "bytedata:" + data);
+      
+           
+
           
-            
-            return data;
         }
 
         public override Task<byte[]> ReadAndWrite(byte[] sendData)

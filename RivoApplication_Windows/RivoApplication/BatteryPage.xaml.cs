@@ -76,7 +76,7 @@ namespace RivoApplication
                 MainPage root = MainPage.Current;
                 root.Notify("Success");
                 dispatcherTimer.Start();
-                Debug.WriteLine("result: " + result.GetValue(7));
+             
             }
 
 
@@ -94,7 +94,7 @@ namespace RivoApplication
                 MainPage root = MainPage.Current;
                 root.Notify("Success");
                 dispatcherTimer.Start();
-                Debug.WriteLine("result: " + result.GetValue(7));
+            
             }
         }
 
@@ -108,7 +108,7 @@ namespace RivoApplication
            
           
             var real=System.Text.Encoding.UTF8.GetString(result);
-            root.Notify("Success: " +real);
+            root.Notify("Success");
             int start = 1;
             int end =1;
             for (int a = 0; a < real.Length; a++) {
@@ -130,7 +130,7 @@ namespace RivoApplication
             Battery.Text = batt;
             dispatcherTimer.Start();
             
-            Debug.WriteLine("result: " + result.GetValue(7));
+          
         }
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
@@ -139,7 +139,7 @@ namespace RivoApplication
             GattCharacteristic reader = MainPage.Current.readerName();
             BLEDevice device = new BLEDevice(writer, reader);
             String name = Namebox.Text;
-            Debug.WriteLine("Name: "+name);
+        
             byte[] namebytes = Encoding.UTF8.GetBytes(name);
             byte[] topass = new byte[namebytes.Length+1];
             topass[0] = 0x1;
@@ -156,10 +156,15 @@ namespace RivoApplication
             GattCharacteristic reader = MainPage.Current.readerName();
             BLEDevice device = new BLEDevice(writer, reader);
             MainPage root = MainPage.Current;
+            
+            
             var result=await device.GetRivoInfo();
+            while (result == null)
+            {
+                result = await device.GetRivoInfo();
+            }
             var real = System.Text.Encoding.UTF8.GetString(result);
-            for (int c = 0; c < real.Length; c++)
-                Debug.WriteLine(real[c]);
+      
             int version = -1;
             int versionend = -1;
             int serial = -1;
@@ -178,7 +183,7 @@ namespace RivoApplication
             string present = real.Substring(version,serial-version);
             for (int a = serial+1; a < real.Length; a++)
             {
-                Debug.WriteLine(serial);
+          
                 if (real[a] == ':')
                 {
                     version = a;
@@ -193,11 +198,20 @@ namespace RivoApplication
             string serialn = real.Substring(version,serial-version);
           
 
-            root.Notify("Success:"+real);
+            root.Notify("Success:");
             Name.Text = present;
             Version.Text = serialn;
             dispatcherTimer.Start();
 
+        }
+
+        private async void Button_Click9(object sender, RoutedEventArgs e)
+        {
+            GattCharacteristic writer = MainPage.Current.writerName();
+            GattCharacteristic reader = MainPage.Current.readerName();
+            BLEDevice device = new BLEDevice(writer, reader);
+            MainPage root = MainPage.Current;
+            var result = await device.Disconnect();
         }
     }
 }

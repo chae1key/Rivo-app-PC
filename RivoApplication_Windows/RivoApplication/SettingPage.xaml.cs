@@ -86,23 +86,29 @@ namespace RivoApplication
         {
             screenreader = 11;
             MainPage page = MainPage.Current;
-            page.Notify("screen");
-
+        
+            dispatcherTimer.Start();
         }
 
         private void RadioButton_Checked_1(object sender, RoutedEventArgs e)
         {
             screenreader = 21;
+            MainPage page = MainPage.Current;
+        
+            dispatcherTimer.Start();
         }
 
         private void RadioButton_Checked_2(object sender, RoutedEventArgs e)
         {
             screenreader = 12;
+            MainPage page = MainPage.Current;
+          
+            dispatcherTimer.Start();
         }
 
         private async void Button_Click2(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("now to connect" + MainPage.Current.bleDeviceName().DeviceId);
+           
             GattCharacteristic writer = MainPage.Current.writerName();
             GattCharacteristic reader = MainPage.Current.readerName();
             BLEDevice device = new BLEDevice(writer, reader);
@@ -110,20 +116,17 @@ namespace RivoApplication
 
             byte[] topass = new byte[passer.Length+1];
             topass[0] = 0x1;
-            Debug.WriteLine("language:"+topass.Length);
+           
             byte[] topass1 = Encoding.UTF8.GetBytes(passer);
             Array.Copy(topass1, 0, topass, 1, topass1.Length);
-            for (int i = 0; i < topass.Length; i++)
-                Debug.WriteLine("passing:"+topass[i] + "  ");
+     
             string result = await device.SetL3L4Language(topass);
 
             MainPage page = MainPage.Current;
             page.Notify("Language Change Success");
             dispatcherTimer.Start();
             var change = await device.GetL3L4Language();
-            for (int z = 0; z < change.Length; z++)
-                Debug.WriteLine(change[z]);
-            Debug.WriteLine(Encoding.UTF8.GetString(change));
+         
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -137,6 +140,7 @@ namespace RivoApplication
                 L3 = 30;
             MainPage page = MainPage.Current;
             page.Notify(text);
+            dispatcherTimer.Start();
         }
 
         private void L3Type_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -154,6 +158,7 @@ namespace RivoApplication
                 L3method = 21;
             MainPage page = MainPage.Current;
             page.Notify(text);
+            dispatcherTimer.Start();
         }
 
    
@@ -173,6 +178,7 @@ namespace RivoApplication
                 L4method = 21;
             MainPage page = MainPage.Current;
             page.Notify(text);
+            dispatcherTimer.Start();
         }
 
         private async void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
@@ -186,14 +192,29 @@ namespace RivoApplication
             string month = Time.Substring(5,2);
             string date = Time.Substring(8,2);
             string ampm=Time.Substring(10,4);
-            string hour = Time.Substring(14,2);
             byte realhour;
-            string min=Time.Substring(17,2);
-            string sec = Time.Substring(20,2); 
+            string hour = null;
+
+            string min = null;
+            string sec = null;
+            if (Time.Length == 21)
+            {
+               hour = Time.Substring(14, 1);
+
+                min = Time.Substring(16, 2);
+              sec = Time.Substring(19, 2);
+            }
+            if (Time.Length == 22)
+            {
+              hour = Time.Substring(14, 2);
+
+              min = Time.Substring(17, 2);
+                sec = Time.Substring(20, 2);
+            }
            
             realhour = byte.Parse(hour);
             if (ampm.ToString() == " 오후 ")
-                realhour += 10;
+                realhour += 12;
             short realyear = short.Parse(year);
             byte realmonth = byte.Parse(month);
             byte realdate = byte.Parse(date);
@@ -206,15 +227,15 @@ namespace RivoApplication
             topass[2] = (byte) (realyear & 0xFF00);
             topass[3] = (byte) (realyear & 0xFF);
             topass[4] = realmonth;
-            topass[5] = realhour;
-            topass[6] = realmin;
-            topass[7] = realsec;
-            topass[8] = 0;
+            topass[5] = realdate;
+            topass[6] = realhour;
+            topass[7] = realmin;
+            topass[8] = realsec;
             topass[9] = 0;
            var result=await device.SetDateandTime(topass);
-           
-            page.Notify(realyear.ToString()+" "+realmonth.ToString()+" "+realdate.ToString()+" "+realhour.ToString()+" "+realsec.ToString());
-            
+
+            page.Notify("Success");
+            dispatcherTimer.Start();
 
 
         }

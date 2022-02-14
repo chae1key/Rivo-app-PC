@@ -20,6 +20,7 @@ using Windows.Devices.Bluetooth;
 using Windows.Devices.Bluetooth.Advertisement;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Bluetooth.GenericAttributeProfile;
+using System.Diagnostics;
 
 // 빈 페이지 항목 템플릿에 대한 설명은 https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x412에 나와 있습니다.
 
@@ -127,7 +128,7 @@ namespace RivoApplication
         public void Denotify() {
             StatusBorder.Visibility = Visibility.Collapsed;
         }
-      
+        
     }
 
 }

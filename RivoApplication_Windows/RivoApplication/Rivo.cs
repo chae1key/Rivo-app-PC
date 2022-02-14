@@ -93,13 +93,13 @@ namespace Rivo
             if (crc == realCrc)
             {
                 return true;
-                Console.WriteLine("CRC Checking == TRUE");
+              
             }
             else
             {
-                Debug.WriteLine("crc wrong"+ realCrc+"   "+crc);
+                
                 return false;
-                Console.WriteLine("CRC Checking == FALSE");
+               
             }
         }
 
@@ -114,7 +114,7 @@ namespace Rivo
                           recvFrame[recvSize - 2] == 0x0d &&
                           recvFrame[recvSize - 1] == 0x0a))
             {
-                Debug.WriteLine("at0d0aiswrong");
+             
                 return false;
             }
             else
@@ -123,7 +123,7 @@ namespace Rivo
                 if (CRC16_CHECK(recvFrame) == true) return true;
                 else
                 {
-                    Debug.WriteLine("crc is wrong");
+                    
                     return false; }
             }
         }
@@ -189,7 +189,7 @@ namespace Rivo
               */
 
             byte[] sendframe = composeSendframe(id, data);
-            Debug.WriteLine("hi");
+          
             //int length = recvFrame[4] + recvFrame[5] * 256 - 2;
 
             int position;
@@ -206,7 +206,7 @@ namespace Rivo
 
                 //todo write 
                 mtu = 125;
-                Debug.WriteLine(framesize);
+               
                
                     while (position < framesize)
                 {
@@ -222,10 +222,7 @@ namespace Rivo
                     position += sendSize;
 
                 }
-                if (id == "UM" && sendframe[6] == 2)
-                    Thread.Sleep(30000);
-                if (id == "UM" && sendframe[6] == 3)
-                    Thread.Sleep(30000);
+               
                 byte[] recvframe = await readPacket();
                 while (recvframe.Length <= 6)
                 {
@@ -238,7 +235,7 @@ namespace Rivo
                 {
 
                     len = recvframe[4] + (recvframe[5] * 256) + 10;
-                    Debug.WriteLine("length: " + len);
+                  
                     while (recvframe.Length < len)
                     {
                         await WriteDataPacket(sendframe);
@@ -254,7 +251,7 @@ namespace Rivo
 
                 if (recvFrameCheck(recvframe, recvSize, id))
                 {
-                    Debug.WriteLine("Nice frame");
+                    
                     //  byte opcode = recvframe[6];
                     byte result = recvframe[7];
 
@@ -270,14 +267,20 @@ namespace Rivo
 
                 else
                 {
-                    Thread.Sleep(100);
-                    Debug.WriteLine("Bad frame" + id);
+                    while (recvFrameCheck(recvframe, recvSize, id) != false)
+                    {
+                        await WriteDataPacket(sendframe);
+                        recvframe = await readPacket();
+                        recvSize = recvframe.Length;
+                        if (recvFrameCheck(recvframe, recvSize, id) == true)
+                            break;
+                    }
                 }
 
 
             }
 
-            throw new Exception("Retry failed");
+            return null;
         }
 
         async Task<byte[]> SendAndReceive2(string id, byte[] data)
@@ -292,7 +295,7 @@ namespace Rivo
               */
 
             byte[] sendframe = composeSendframe(id, data);
-            Debug.WriteLine("hi");
+       
             //int length = recvFrame[4] + recvFrame[5] * 256 - 2;
 
             int position;
@@ -309,7 +312,7 @@ namespace Rivo
 
                 //todo write 
                 mtu = 125;
-                Debug.WriteLine(framesize);
+               
         
 
                 await WriteDataPacket(sendframe);//Array.copy()
@@ -328,10 +331,10 @@ namespace Rivo
                  
                         len = recvframe[4] + (recvframe[5] * 256) + 10;
                   
-                    Debug.WriteLine("length: " + len);
+                   
                     while (recvframe.Length < len )
                     {
-                        Debug.WriteLine("sliced recvframelength:"+recvframe.Length+"reallen:"+len);
+                      
                         await WriteDataPacket(sendframe);
                         byte[] temp = await readPacket();
                         if (temp.Length >= len)
@@ -350,7 +353,7 @@ namespace Rivo
 
                 if (recvFrameCheck(recvframe, recvSize, id))
                 {
-                    Debug.WriteLine("Nice frame");
+                    
                     //  byte opcode = recvframe[6];
                     byte result = recvframe[7];
 
@@ -360,7 +363,7 @@ namespace Rivo
                     }
 
                     byte[] temp2 = new byte[recvframe.Length];
-                    Debug.WriteLine("recvlength: " + recvframe.Length);
+                    
                     Array.Copy(recvframe, 8, temp2, 0, len - 12);
                     tobreak = true;
                     return temp2;
@@ -371,7 +374,7 @@ namespace Rivo
                 else
                 {
                     Thread.Sleep(100);
-                    Debug.WriteLine("Bad frame" + id);
+                  
                 }
 
 
@@ -453,9 +456,9 @@ namespace Rivo
                 {
                     recvFrameCheck(recvframe, recvSize, "MT");
                     len = recvframe[4] + recvframe[5] * 256 + 10;
-                    Debug.WriteLine(recvframe[4] + " " + recvframe[5]);
+                 
                     byte[] temp = { };
-                    Debug.WriteLine(recvframe.Length + "len: " + len);
+                   
                     while (recvframe.Length < len)
                     {
 
@@ -464,7 +467,7 @@ namespace Rivo
 
                     }
                     int mtu = recvframe[8] + recvframe[9] * 256;
-                    Debug.WriteLine(recvframe[8] + recvframe[9] * 256);
+                   
                     return (UInt16)mtu;
                 }
 
@@ -511,18 +514,24 @@ namespace Rivo
         }
         public async Task<byte[]> VerifyData(byte[] topass)
         {
-            Debug.WriteLine("verifying");
+           
             var result = await SendAndReceive("UM", topass);
             return result;
         }
         public async Task<byte[]> UpdateEnd(byte[] topass)
         {
-            Debug.WriteLine("Update Ending;");
+          
           
             var result = await SendAndReceive("UM", topass);
             return result;
         }
+        public async Task<byte[]> Disconnect()
+        {
+            
 
+            var result = await SendAndReceive("CM", new byte[] { 0x1});
+            return result;
+        }
 
     }
 

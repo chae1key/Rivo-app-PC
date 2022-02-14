@@ -52,7 +52,7 @@ namespace RivoApplication
             StopBleDeviceWatcher();
 
             var bleDeviceDisplay = ResultsListView.SelectedItem as BluetoothLEDeviceDisplay;
-            Debug.WriteLine("BLE DEVICE : " + ResultsListView.SelectedItem);
+       
             if (bleDeviceDisplay != null)
             {
                
@@ -73,11 +73,11 @@ namespace RivoApplication
                 
                 SelectedBleDeviceId = bleDeviceDisplay.Id;
                 SelectedBleDeviceName = bleDeviceDisplay.Name;
-                Debug.WriteLine("connect to:"+SelectedBleDeviceId + SelectedBleDeviceName);
+              
             }
 
         }
-        private async void ConnectButton_Click(object sender, RoutedEventArgs e)
+        public async void ConnectButton_Click(object sender, RoutedEventArgs e)
         {
             ConnectButton.IsEnabled = false;
 
@@ -88,7 +88,7 @@ namespace RivoApplication
                 // BT_Code: BluetoothLEDevice.FromIdAsync must be called from a UI thread because it may prompt for consent.
                 
                
-                Debug.WriteLine("Device: " + SelectedBleDeviceId);
+             
                 bluetoothLeDevice = await BluetoothLEDevice.FromIdAsync(SelectedBleDeviceId);
                 MainPage.Current.setBLEDevice(bluetoothLeDevice);
                 if (bluetoothLeDevice == null)
@@ -112,7 +112,7 @@ namespace RivoApplication
                 var readuuid = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
                 var writeuuid = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
                 var datauuid = "6e400004-b5a3-f393-e0a9-e50e24dcca9e";
-                bluetoothLeDevice.ConnectionStatusChanged += Connectionstatuschanged;
+               
                 if (result.Status == GattCommunicationStatus.Success)
                 {
                     var services = result.Services;
@@ -127,28 +127,27 @@ namespace RivoApplication
                             var accessStatus = await service.RequestAccessAsync();
                             if (accessStatus == DeviceAccessStatus.Allowed)
                             {
-                                Debug.WriteLine("Success");
                                 var characteristicsResult = await service.GetCharacteristicsAsync(BluetoothCacheMode.Uncached);
                                 IReadOnlyList<GattCharacteristic> characteristics = null;
                                  characteristics = characteristicsResult.Characteristics;
                                 foreach (GattCharacteristic c in characteristics)
                                 {
-                                   Debug.WriteLine( c.Uuid);
+                                
                                     if (DisplayHelpers.GetCharacteristicName(c) == readuuid)
                                     {
-                                        Debug.WriteLine("Characteristic");
+                                  
                                         MainPage.Current.setreader(c);
                                         selectedCharacteristic = c;
                                     }
                                     if (DisplayHelpers.GetCharacteristicName(c) == writeuuid)
                                     {
-                                        Debug.WriteLine("Writer");
+                                       
                                         MainPage.Current.setwriter(c);
                                         Commander = c;
                                     }
                                     if (DisplayHelpers.GetCharacteristicName(c) == datauuid) {
                                         MainPage.Current.setdataWriter(c);
-                                        Debug.WriteLine("DATAMiner");
+                                       
                                     }
 
                                 }
@@ -173,7 +172,7 @@ namespace RivoApplication
 
                                 var results = await Commander.WriteValueWithResultAsync(buffer);
 
-                                Debug.WriteLine("what happened"+results.Status);
+                           
 
 
 
@@ -192,12 +191,7 @@ namespace RivoApplication
 
         }
 
-        private void Connectionstatuschanged(BluetoothLEDevice sender, object args)
-        {
-            Debug.WriteLine("Disconnected");
-            MainPage page = MainPage.Current;
-            page.Notify("Disconnected; please connect again");
-        }
+        
 
         private void Search_Click()
         {
@@ -441,23 +435,22 @@ namespace RivoApplication
             byte[] data;
                 CryptographicBuffer.CopyToByteArray(result.Value, out data);
             var readata=Encoding.UTF8.GetString(data);
-            Debug.WriteLine("Data:"+data);
-                Debug.WriteLine("READ:"+ result.Status);
+         
              result = await selectedCharacteristic.ReadValueAsync();
 
            
             CryptographicBuffer.CopyToByteArray(result.Value, out data);
              readata = Encoding.UTF8.GetString(data);
-            Debug.WriteLine("Data Length:" + readata.Length+"bytedata:"+data);
+      
             for (int i = 0; i < data.Length; i++)
             {
                 var a = data.GetValue(i);
                 char b = Convert.ToChar(a);
-                Debug.WriteLine("read"+i+"th character: "+a+"converted to "+b);
+             
             }
             RivoDevice device = new BLEDevice();
             bool Frame=device.recvFrameCheck(data,data.Length,"MT");
-            Debug.WriteLine("READ:" + result.Status+"GOOD FRame:"+Frame);
+          
         }
 
         #endregion
