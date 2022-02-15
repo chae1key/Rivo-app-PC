@@ -246,7 +246,7 @@ namespace RivoApplication
             byte[] updatestart = new byte[buflength];
          
             updatestart[0] = 0x0;
-            updatestart[1] = 0x2;
+            updatestart[1] = 0x3;
             intToFrame(updatestart, 2, bt.Length);
             intToFrame(updatestart, 6, crc);
             shortToFrame(updatestart, 10, (short)realfilename.Length);
@@ -256,7 +256,7 @@ namespace RivoApplication
             root.Notify("Update Starting");
             int totalbytesent = 0;
             short seqnum = 0;
-
+            UpdateStatus.IsActive = true;
 
             while (true)
             {
