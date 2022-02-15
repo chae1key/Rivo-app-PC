@@ -187,7 +187,7 @@ namespace RivoApplication
                 var results = await device.UpdateData(dataframe);
                 seqnum++;
             }
-            root.Notify("Update Complete");
+           
           
             
 
@@ -211,9 +211,9 @@ namespace RivoApplication
                 recvframe = await device.UpdateEnd(end);
                 Thread.Sleep(1000);
             }
-    
 
-       
+
+            root.Notify("Update Complete");
             UpdateStatus.IsActive = false;
         }
         private async void CharacteristicValue2_Changed(GattCharacteristic sender, GattValueChangedEventArgs args)
@@ -281,7 +281,7 @@ namespace RivoApplication
                 var results = await device.UpdateData(dataframe);
                 seqnum++;
             }
-            root.Notify("Update Complete");
+            
          
 
 
@@ -316,7 +316,7 @@ namespace RivoApplication
 
 
 
-       
+            root.Notify("Update Complete");
             UpdateStatus.IsActive = false;
          
             Thread.Sleep(10000);
