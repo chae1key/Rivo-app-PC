@@ -33,6 +33,11 @@ namespace RivoApplication
         int L4 = 0;
         int L3method = 0;
         int L4method = 0;
+        static string initialL3;
+        static string initialL4;
+        static string initialL3method;
+        static string initialL4method;
+        static string initialscreenreader;
         public SettingPage()
         {
             this.InitializeComponent();
@@ -40,6 +45,74 @@ namespace RivoApplication
 
             dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
             dispatcherTimer.Tick += new EventHandler<Object>(dispatcherTimer_Tick);
+            Init();
+
+
+
+
+        }
+        private async void Init() {
+            GattCharacteristic writer = MainPage.Current.writerName();
+            GattCharacteristic reader = MainPage.Current.readerName();
+            BLEDevice device = new BLEDevice(writer, reader);
+            var result=await device.GetScreenReader();
+            byte[] screenreader=new byte[2];
+            Array.Copy(result, 10, screenreader, 0, 2);
+            
+            
+            MainPage root = MainPage.Current;
+           
+          
+            string reader1 = Encoding.UTF8.GetString(screenreader);
+            if (reader1 == "11")
+                initialscreenreader = "iOS Voice Over";
+            if (reader1 == "21")
+                initialscreenreader = "Android Talkback";
+            else
+                initialscreenreader = "watchOS";
+            
+            Init2();
+        }
+        private async void Init2() {
+            GattCharacteristic writer = MainPage.Current.writerName();
+            GattCharacteristic reader = MainPage.Current.readerName();
+            BLEDevice device = new BLEDevice(writer, reader);
+            var result = await device.GetL3L4Language();
+            for (int a = 0; a < result.Length; a++)
+                Debug.WriteLine(result[a]);
+            byte[] payload = new byte[11];
+            Array.Copy(result,8,payload,0,11);
+            string realresult = Encoding.UTF8.GetString(payload);
+            string l3 = realresult.Substring(0, 2);
+            string l3m = realresult.Substring(3,2);
+            string l4 = realresult.Substring(6,2);
+            string l4m = realresult.Substring(9,2);
+            if (l3 == "0") initialL3 = "None";
+            if (l3 == "10") initialL3 = "숫자";
+            if (l3 == "20") initialL3 = "영어";
+            if (l3 == "30") initialL3 = "한글";
+            if (l4 == "0") initialL3 = "None";
+            if (l4 == "10") initialL4 = "숫자";
+            if (l4 == "20") initialL4 = "영어";
+            if (l4 == "30") initialL4= "한글";
+            if (l3m == "0") initialL3method = "None";
+            if (l3m == "21") initialL3method = "EWQ";
+            if (l3m == "22") initialL3method = "ABC";
+            if (l3m == "31") initialL3method = "리보";
+            if (l3m == "32") initialL3method = "나랏글";
+            if (l3m == "33") initialL3method = "천지인";
+            if (l4m == "0") initialL4method = "None";
+            if (l4m == "21") initialL4method = "EWQ";
+            if (l4m == "22") initialL4method = "ABC";
+            if (l4m == "31") initialL4method = "리보";
+            if (l4m == "32") initialL4method = "나랏글";
+            if (l4m == "33") initialL4method = "천지인";
+
+            status.Text = "Status: "+initialscreenreader+"," + initialL3 + " " + initialL3method + " " + initialL4 + " " + " " + initialL4method;
+
+
+
+
 
         }
         private void dispatcherTimer_Tick(object sender, object e)

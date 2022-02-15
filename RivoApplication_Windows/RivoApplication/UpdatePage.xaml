@@ -18,6 +18,6 @@
                 FontSize="20" FontWeight="Bold" BorderBrush="{x:Null}" Click="Button_Click" HorizontalAlignment="Center" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Visibility="Collapsed"/>
         <Button x:Name="UpdateBT" Content="Update Bluetooth" Margin="500,213,0,0" VerticalAlignment="Top" 
                 FontSize="20" FontWeight="Bold" BorderBrush="{x:Null}" Click="Button_Click1" HorizontalAlignment="Center" Background="{ThemeResource SystemControlBackgroundChromeMediumBrush}" Visibility="Collapsed"/>
-
+        <TextBlock Name="Percentage" HorizontalAlignment="Center" Text="Percentage: " Height="590" Margin="0,600,0,-48" FontWeight="Bold" FontSize="24" />
     </Grid>
 </Page>

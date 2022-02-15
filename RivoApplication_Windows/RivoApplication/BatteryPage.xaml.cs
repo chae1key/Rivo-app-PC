@@ -39,11 +39,14 @@ namespace RivoApplication
 
         }
 
-        private  void Init()
+        private async void Init()
         {
             Button_Click_2(null,null);
+            Init2();
             
-            Button_Click(null,null);
+        }
+       private async void Init2() {
+            Button_Click(null, null);
         }
 
         private void dispatcherTimer_Tick(object sender,object e)
@@ -198,20 +201,13 @@ namespace RivoApplication
             string serialn = real.Substring(version,serial-version);
           
 
-            root.Notify("Success:");
+            root.Notify("Success");
             Name.Text = present;
             Version.Text = serialn;
             dispatcherTimer.Start();
 
         }
 
-        private async void Button_Click9(object sender, RoutedEventArgs e)
-        {
-            GattCharacteristic writer = MainPage.Current.writerName();
-            GattCharacteristic reader = MainPage.Current.readerName();
-            BLEDevice device = new BLEDevice(writer, reader);
-            MainPage root = MainPage.Current;
-            var result = await device.Disconnect();
-        }
+     
     }
 }

@@ -1,0 +1,8 @@
+﻿"C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\obj\x86\Release\ilc\in\RivoApplication.exe"
+/Lib:"C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\obj\x86\Release\ilc\in"
+/Lib:"C:\Users\Jason\.nuget\packages\runtime.win10-x86.microsoft.net.native.compiler\2.2.10-rel-29722-00\tools\x86\ilc\lib\Private"
+/WinMD:"C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\obj\x86\Release\ilc\in\WinMetadata\Microsoft.UI.Xaml.winmd"
+/WinMD:"C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\obj\x86\Release\ilc\in\WinMetadata\Windows.winmd"
+/VSTelemetrySessionSettings:"{\"IsOptedIn\":true,\"HostName\":\"Dev14\",\"AppInsightsInstrumentationKey\":\"f144292e-e3b2-4011-ac90-20e5c03fbce5\",\"AsimovInstrumentationKey\":\"AIF-312cbd79-9dbb-4c48-a7da-3cc2a931cb70\",\"AppId\":1001,\"UserId\":\"7612ec20-3a8b-4141-92e2-b2c2dbfe7011\",\"Id\":\"778b8c19-9cb0-42f6-b713-aee55d0379cd\",\"ProcessStartTime\":637801862796934536}"
+/RdXmlPath:"C:\Users\Jason\.nuget\packages\microsoft.net.native.compiler\2.2.10-rel-29722-00\tools\LibraryXML"
+/RunOnlyPreDR

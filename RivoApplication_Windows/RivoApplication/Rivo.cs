@@ -525,11 +525,11 @@ namespace Rivo
             var result = await SendAndReceive("UM", topass);
             return result;
         }
-        public async Task<byte[]> Disconnect()
+        public async Task<byte[]> GetScreenReader()
         {
             
 
-            var result = await SendAndReceive("CM", new byte[] { 0x1});
+            var result = await SendAndReceive("SR", new byte[] { 0x0});
             return result;
         }
 

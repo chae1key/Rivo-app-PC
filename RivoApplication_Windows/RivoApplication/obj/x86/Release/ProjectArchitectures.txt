@@ -1,0 +1,1 @@
+C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\RivoApplication.csproj;x86

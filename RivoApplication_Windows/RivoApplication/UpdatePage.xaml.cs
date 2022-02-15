@@ -109,10 +109,12 @@ namespace RivoApplication
                 Debug.WriteLine("seqnum: "+seqnum);
                 var results = await device.UpdateData(dataframe);
                 seqnum++;
+                int percentage=((int)seqnum*10000)/(boot.Length+mr3bin.Length);
+                Percentage.Text = "Percentage: "+percentage;
             }
-            root.Notify("Update Complete");
-            
-            
+
+
+            root.Notify("Boot File Completed ... MR3 File will be Updating soon");
             
             verify[0] = 0x2;
             intToFrame(verify, 1, crc);
@@ -162,7 +164,7 @@ namespace RivoApplication
             var startmr3bin=await device.UpdateStart(updatestart);
              totalbytesent = 0;
              seqnum = 0;
-
+            root.Notify("MR3 File Update Starting");
        
             while (true)
             {
@@ -186,6 +188,8 @@ namespace RivoApplication
                 Debug.WriteLine("seqnum: " + seqnum);
                 var results = await device.UpdateData(dataframe);
                 seqnum++;
+                int percentage = (((int)seqnum * 10000)+boot.Length) / (boot.Length + mr3bin.Length);
+                Percentage.Text = "Percentage: " + percentage;
             }
            
           
@@ -280,6 +284,8 @@ namespace RivoApplication
              
                 var results = await device.UpdateData(dataframe);
                 seqnum++;
+                int percentage = ((int)seqnum * 10000) / bt.Length;
+                Percentage.Text = "Percentage: " + percentage;
             }
             
          

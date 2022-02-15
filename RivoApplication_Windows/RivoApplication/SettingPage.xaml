@@ -50,6 +50,7 @@
         <RadioButton Content="WatchOS" Margin="123,426,0,0" VerticalAlignment="Top" Checked="RadioButton_Checked_2"/>
         <Button Content="스크린리더 변경" Margin="450,-20,0,0" Width="230" Height="70" Click="Button_Click"/>
         <Button Content="언어변경" Margin="750,-400,0,0" Width="230" Height="70" Click="Button_Click2"/>
+        <TextBlock Name="status" HorizontalAlignment="Center" Margin="-600,550,0,0" Text="Status: " TextWrapping="Wrap" VerticalAlignment="Top" FontWeight="Bold" FontSize="24"/>
         <!--ProgressRing은 나중에 추가 예정 -->
         <!--<ProgressRing HorizontalAlignment="Left"  Margin="313,23,0,0" VerticalAlignment="Top" IsActive="{x:Bind toggleSwitch.IsOn, Mode=OneWay}"/>-->
 
