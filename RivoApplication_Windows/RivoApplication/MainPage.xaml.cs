@@ -26,18 +26,19 @@ using System.Diagnostics;
 
 namespace RivoApplication
 {
-    
+
     /// <summary>
     /// 자체적으로 사용하거나 프레임 내에서 탐색할 수 있는 빈 페이지입니다.
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public static string rand = "asdfssss";
+
         public static BluetoothLEDevice device;
         public static GattCharacteristic writer;
         public static GattCharacteristic reader;
         public static GattCharacteristic dataWriter;
-       
+        public static bool connected = false;
+
         public void setBLEDevice(BluetoothLEDevice recv) {
             device = recv;
         }
@@ -70,7 +71,7 @@ namespace RivoApplication
         }
 
         public static MainPage Current { get; internal set; }
-        
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -89,15 +90,21 @@ namespace RivoApplication
 
         private void NavView_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
-            if(args.IsSettingsInvoked==true)
+
+
+            if (MainPage.connected == true || args.InvokedItemContainer.Tag.ToString() == "Myrivo")
             {
-                NavView_Navigate("settings", args.RecommendedNavigationTransitionInfo);
+                if (args.IsSettingsInvoked == true)
+                {
+                    NavView_Navigate("settings", args.RecommendedNavigationTransitionInfo);
+                }
+                else if (args.InvokedItemContainer != null)
+                {
+                    var navItemTag = args.InvokedItemContainer.Tag.ToString();
+                    NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
+                }
             }
-            else if(args.InvokedItemContainer != null)
-            {
-                var navItemTag = args.InvokedItemContainer.Tag.ToString();
-                NavView_Navigate(navItemTag, args.RecommendedNavigationTransitionInfo);
-            }
+            
         }
 
         private void NavView_Navigate(string navItemTag, NavigationTransitionInfo transitionInfo)

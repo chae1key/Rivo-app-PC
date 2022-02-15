@@ -30,7 +30,7 @@
     <AppXManifest Include="C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\bin\x86\Release\ilc\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2022-02-15T03:01:20.953</Modified>
+      <Modified>2022-02-15T03:41:15.169</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -74,19 +74,19 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\bin\x86\Release\ilc\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2022-02-15T03:00:49.617</Modified>
+      <Modified>2022-02-15T03:14:14.686</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\bin\x86\Release\ilc\RivoApplication.dll">
       <PackagePath>RivoApplication.dll</PackagePath>
-      <Modified>2022-02-15T03:01:20.146</Modified>
+      <Modified>2022-02-15T03:41:14.696</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\bin\x86\Release\ilc\RivoApplication.exe">
       <PackagePath>RivoApplication.exe</PackagePath>
-      <Modified>2022-02-15T03:01:20.674</Modified>
+      <Modified>2022-02-15T03:41:15.150</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Jason\Rivo-app-PC\RivoApplication_Windows\RivoApplication\bin\x86\Release\ilc\RivoApplication.pdb">
       <PackagePath>RivoApplication.pdb</PackagePath>
-      <Modified>2022-02-15T03:01:20.669</Modified>
+      <Modified>2022-02-15T03:41:15.149</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Jason\.nuget\packages\microsoft.ui.xaml\2.7.0\build\..\lib\uap10.0\Microsoft.UI.Xaml.winmd">
       <PackagePath>Microsoft.UI.Xaml.winmd</PackagePath>

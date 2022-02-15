@@ -78,8 +78,7 @@ namespace RivoApplication
             GattCharacteristic reader = MainPage.Current.readerName();
             BLEDevice device = new BLEDevice(writer, reader);
             var result = await device.GetL3L4Language();
-            for (int a = 0; a < result.Length; a++)
-                Debug.WriteLine(result[a]);
+            
             byte[] payload = new byte[11];
             Array.Copy(result,8,payload,0,11);
             string realresult = Encoding.UTF8.GetString(payload);

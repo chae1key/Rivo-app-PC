@@ -104,6 +104,7 @@ namespace RivoApplication
             if (bluetoothLeDevice != null)
             {
                 Debug.WriteLine("Connected");
+                MainPage.connected = true;
                 // Note: BluetoothLEDevice.GattServices property will return an empty list for unpaired devices. For all uses we recommend using the GetGattServicesAsync method.
                 // BT_Code: GetGattServicesAsync returns a list of all the supported services of the device (even if it's not paired to the system).
                 // If the services supported by the device are expected to change during BT usage, subscribe to the GattServicesChanged event.
